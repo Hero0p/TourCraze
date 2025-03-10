@@ -1,0 +1,42 @@
+<% layout("/layouts/boilerplate") -%>
+
+   
+    <!-- <form method = "POST" action="/listings/:id">   -->
+    <form method = "POST" action="/listings/<%=item.id%>/?_method=PUT">
+        
+        <div class="row">
+            <div class="col-8 offset-2"> 
+        <div class="mb-3">
+            <h1>EDIT A LISTING</h1>
+            <br>
+            <label for="name" class = "form-label">Name:</label>
+            <input type="text" id="title" name="listing[title]" value="<%=item.title%>" class = "form-control"><br>
+        </div>
+        <div class="mb-3">
+            <label for="description"  class = "form-label">Description:</label>
+            <input type="text" id="description" name="listing[description]" value="<%=item.description%>" class = "form-control"><br>            
+        </div>
+        <div class="mb-3">
+            <label for="country"  class = "form-label">Country:</label>
+            <input type="text" id="country" name="listing[country]" value="<%=item.country%>"><br>
+        </div>
+        <div class="mb-3">
+            <label for="price"  class = "form-label">Price:</label>
+            <input type="number" id="price" name="listing[price]" value="<%=item.price%>" class = "form-control"> <br>
+            
+        </div>
+        <div class="mb-3">
+            <label for="location"  class = "form-label">Location:</label>
+            <input type="text" id="location" name="listing[location]" value="<%=item.location%>" class = "form-control"><br>
+        </div>
+        
+         
+        
+        <button class = "btn btn-dark edit-btn" type="submit">Save Changes</button>
+
+        <br>
+        <br>
+           
+            </div>
+        </div>
+    </form>
