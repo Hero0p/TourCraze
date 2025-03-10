@@ -25,6 +25,7 @@ Database: MongoDB (Mongoose ODM)
 1️⃣ Clone the repository
 
  git clone https://github.com/Hero0p/TourCraze.git
+ 
  cd TourCraze
 
 2️⃣ Install dependencies
