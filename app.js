@@ -5,6 +5,14 @@ const path = require("path");
 const listing = require("./models/listing");
 const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
+const wrapAsync = require("./utils/wrapAsync.js");
+const ExpressError = require("./utils/ExpressError.js");
+const {listingSchema} = require("./schema.js");
+const review = require("./models/review");
+// const {reviewSchema} = require("./schema.js")
+
+const listings = require("./routes/listing.js");
+const reviews = require("./routes/review.js");
 
 const port = 3000;
 
@@ -30,48 +38,30 @@ app.get("/" , (req , res) => {
     res.send("working");
 })
 
-app.get("/listings" , async (req , res) => {
-    const allListings = await listing.find();
-    res.render("listings.ejs" , {allListings});
+app.get("/" , (req , res) => {
+    res.send("working");
 })
 
-app.get("/listings/new" , (req , res) => {
-    res.render("new.ejs");
-})
+app.use("/listings" , listings);
 
-//create
-app.post("/listings" , async (req , res) => {
-    const newListing = new listing(req.body.listing);
-    await newListing.save();
-    res.redirect("/listings");
-})
+app.use("/listings/:id/reviews" , reviews);
 
-app.get("/listings/:id" , async (req , res) => {
-    const id = req.params.id;
-    const item = await listing.findById(id);
-    res.render("show.ejs" , {item});
-})
 
-app.get("/listings/:id/edit" , async (req , res) => {
-    let {id} = req.params;
-    const item = await listing.findById(id);
-    res.render("edit.ejs" , {item});
-})
 
-// update
-app.put("/listings/:id" , async (req, res) => {
-    let{id} = req.params;
-    await listing.findByIdAndUpdate(id , {...req.body.listing});
-    res.redirect("/listings");
-})
 
-//delete
-app.delete("/listings/:id" , async (req , res) => {
-    let{id} = req.params;
-    let deletedItem = await listing.findByIdAndDelete(id);
-    console.log(`Deleted ${deletedItem.title}`)
-    res.redirect("/listings");
-})
+
+
+
+app.all("*",(req , res , next) => {
+    next ( new ExpressError(404 , "page not found"));
+});
+
+app.use((err , req , res , next) => {
+    let{statusCode , msg} = err;
+    res.render("error.ejs" , {msg : "something went wrong"});
+    // res.status(statusCode).send(msg)
+    // res.send("something went wrong")
+});
 
 
 app.listen(port, () => {

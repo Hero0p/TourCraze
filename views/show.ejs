@@ -1,13 +1,13 @@
 <% layout("/layouts/boilerplate") -%>
-<div class="row offset-2">
+<div class="row offset-2 ">
     <div class="col-8 offset-2">
         <br>
         <h2>LISTING DETAILS</h2>
         <br>
     </div>
   
-<div class="card">
-    <div class="col-6 offsset-2">
+<div class="card listing-card">
+    <div class="col-6 offsset-2 show-card listing-card">
         <img src="<%= item.image.url %>" class="card-img-top show-img" alt="...">
     </div>
     
@@ -28,15 +28,52 @@
     <br>
     <br>
     
-   
 </form>
-
+</div>
 </div>
 
-
+<div>
+    <h2>ALL REVIEWS</h2>
+    <div class = "row">
+    <% for(review of item.reviews){ %>
+        
+            <div class = "card col-5 mb-3 ms-3">
+                <div class="card-body">
+                        <h5><div class="card-title"> Nishant Chaudhary </div></h5>
+                        <div class="card-text"> <b><%= review.rating %> Stars</b></div>
+                        <div class="card-text"> <%= review.comment %></div>
+            
+                </div>
+                <form class = "mb-3" method = "POST" action = "/listings/<%= item._id %>/reviews/<%= review._id %>?_method=DELETE">
+                    <button class = "btn btn-sm btn-dark" >
+                        Delete
+                    </button>
+                </form>
+            </div>
+            
+    
+        
+    <%}%>
+</div>
 </div>
 
+<div class="col-6 offset-3">
+    <h4>Leave Review</h4>
+    <form class = "form-label" action="/listings/<%= item._id %>/reviews" method = "POST">
+        <div>
+            <label for = "rating"> Rating </label>
+            <input type="range" min = "1" max = "5" id = "rating" class="form-range" name = "review[rating]">
 
+
+        </div>
+        <div>
+            <label for = "comment" >comments</label>
+            <textarea id = "comment" name = "review[comment]" cols = "30" rows = "10"  class = "form-control" required></textarea>
+        </div>
+        <button class = "btn btn-outline-dark">Submit</button>
+    </form>
+
+</div>
       
 <!-- 
 <h1>Details :</h1>

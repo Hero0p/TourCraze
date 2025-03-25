@@ -12,17 +12,17 @@ const Schema = new mongoose.Schema({
     },
     price: Number,
     location: String,
-    country : String
+    country : String,
     // author: {
     //     type: mongoose.Schema.Types.ObjectId,
     //     ref: "User"
     // },
-    // reviews: [
-    //     {
-    //         type: mongoose.Schema.Types.ObjectId,
-    //         ref: "Review"
-    //     }
-    // ]
+    reviews: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Review"
+        }
+    ]
 })
 
 const listing = mongoose.model("Listing", Schema);

@@ -2,7 +2,7 @@
 <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1">
     <!-- <h1>Listings</h1> -->
     <% for(var i = 0; i < allListings.length; i++){ %>
-    <div class="card col" style="width: 20rem;">
+    <div class="card col listing-card" style="width: 20rem;">
         <img height="180rem" src="<%= allListings[i].image.url %>" class="card-img-top" alt="...">
         <a href="/listings/<%= allListings[i]._id %>">
         <div class="card-img-overlay">abcd</div>

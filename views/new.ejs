@@ -1,36 +1,51 @@
 <% layout("/layouts/boilerplate") -%>
     <h1>CREATE A NEW LISTING</h1>
     <br>
-    <form method = "POST" action="/listings"> 
+    <form method = "POST" action="/listings" class="row g-3 needs-validation" novalidate> 
         <div class="row">
             <div class="col-8 offset-2">
 
             
                 <div class = "mb-3">
                     <label for="name" class = "form-label">Name:</label>
-                    <input type="text" id="title" name="listing[title]" class = "form-control"><br>
+                    <input type="text" id="title" name="listing[title]" class = "form-control" required><br>
+                    <div class="invalid-feedback">
+                        Please provide a name.
+                    </div>
                 </div>
             
                 <div class = "mb-3">
                     <label for="description" class = "form-label">Description:</label>
-                    <input type="text" id="description" name="listing[description]" class = "form-control"><br>
+                    <input type="text" id="description" name="listing[description]" class = "form-control" required><br>
+                    <div class="invalid-feedback">
+                        Please provide a detailed description.
+                    </div>
                 </div>
             
                 <div class="row">
                     <div class = "mb-3 col-4">
                         <label for="price" class = "form-label">Price:</label>
-                        <input type="number" id="price" name="listing[price]" class = "form-control"><br>
+                        <input type="number" id="price" name="listing[price]" class = "form-control" required><br>
+                        <div class="invalid-feedback">
+                            Please provide a valid price.
+                        </div>
                     </div>
                     <div class = "mb-3 col-8">
                         <label for="country" class = "form-label">Country:</label>
-                        <input type="text" id="country" name="listing[country]" class = "form-control"><br>
+                        <input type="text" id="country" name="listing[country]" class = "form-control" required><br>
+                        <div class="invalid-feedback">
+                            Please mention the country name.
+                        </div>
 
                 </div>
                 </div>
             
                 <div class = "mb-3">
                     <label for="location" class = "form-label">Location:</label>
-                    <input type="text" id="location" name="listing[location]" class = "form-control"><br>
+                    <input type="text" id="location" name="listing[location]" class = "form-control" required><br>
+                    <div class="invalid-feedback">
+                        Please provide location details.
+                    </div>
                 </div>
             
                 
