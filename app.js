@@ -2,19 +2,43 @@ const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
 const path = require("path");
-const listing = require("./models/listing");
 const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
-const wrapAsync = require("./utils/wrapAsync.js");
 const ExpressError = require("./utils/ExpressError.js");
-const {listingSchema} = require("./schema.js");
-const review = require("./models/review");
-// const {reviewSchema} = require("./schema.js")
+const session = require("express-session");
+const flash = require("connect-flash");
+const passport = require("passport");
+const LocalStrategy = require("passport-local");
+const User = require("./models/user.js");
 
 const listings = require("./routes/listing.js");
 const reviews = require("./routes/review.js");
+const user = require("./routes/user.js");
 
 const port = 3000;
+
+const sessionOptions = {
+    secret : "somethingsecret" ,
+    resave : false ,
+    saveUninitialized : true ,
+    cookie : {
+        expires : true,
+        maxAge: Date.now() + 7 * 24 * 60 * 60 * 1000 ,
+        httpOnly : true
+    }
+}
+
+app.use(session(sessionOptions));
+app.use(flash());
+
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
+
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
+
 
 app.set("view engine" , "ejs");
 app.set("views" , path.join(__dirname , "views"));
@@ -34,19 +58,19 @@ main().then(() => {
     console.log(err);
 })
 
-app.get("/" , (req , res) => {
-    res.send("working");
-})
 
-app.get("/" , (req , res) => {
-    res.send("working");
-})
+
+// app.get("/" , (req , res) => {
+//     res.send("working");
+// })
+
+app.use("/" , user);
 
 app.use("/listings" , listings);
 
 app.use("/listings/:id/reviews" , reviews);
 
-
+// app.use("/signup" , user);
 
 
 
