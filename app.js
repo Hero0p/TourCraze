@@ -13,7 +13,7 @@ const User = require("./models/user.js");
 
 const listings = require("./routes/listing.js");
 const reviews = require("./routes/review.js");
-const user = require("./routes/user.js");
+const userRouter = require("./routes/user.js");
 
 const port = 3000;
 
@@ -60,11 +60,11 @@ main().then(() => {
 
 
 
-// app.get("/" , (req , res) => {
-//     res.send("working");
-// })
+app.get("/" , (req , res) => {
+    res.send("working");
+})
 
-app.use("/" , user);
+app.use("/" , userRouter);
 
 app.use("/listings" , listings);
 
