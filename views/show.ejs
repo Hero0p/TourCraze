@@ -12,6 +12,9 @@
     </div>
     
     <div class="card-body">
+        <!-- <h3>some</h3> -->
+        <h3><%=item.owner.username%></h3>
+
         <p>
             <b><%= item.title %></b><br>
             Description : <%= item.description %><br>
@@ -21,13 +24,21 @@
         </p>
     </div>
 </div>
-<div class="col-1"><a href="/listings/<%= item._id %>/edit" class = "btn btn-dark">Edit</a></div>
-<div class="col-2"><form method="POST" action="/listings/<%= item._id %>?_method=DELETE">
-    <button type="submit" class = "btn btn-dark">Delete</button>
-    <br><br>
-    <br>
-    <br>
-    
+<% if(currUser && currUser._id.equals(item.owner._id)) { %>
+
+    <div class="buttons">
+        <div class="col-1"><a href="/listings/<%= item._id %>/edit" class = "btn btn-dark">Edit</a></div>
+        <div class="col-2"><form method="POST" action="/listings/<%= item._id %>?_method=DELETE">
+        <button type="submit" class = "btn btn-dark">Delete</button>
+        <br><br>
+        <br><br>
+        </div>
+        
+    </div>
+
+<% } %>
+
+
 </form>
 </div>
 </div>

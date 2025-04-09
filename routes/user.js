@@ -16,13 +16,22 @@ router.post("/signup" , async (req , res) => {
     res.redirect("/listings");
 })
 
-
+//login
 router.get("/login" , (req , res) => {
     res.render("login.ejs");
 })
 
-router.post("/login" , passport.authenticate("local", {failureRedirect : "/login" , failureFlash : true}) , (req , res) => {
+router.post("/login" , passport.authenticate("local", {failureRedirect : "/login" , failureFlash : true}) , async (req , res) => {
     res.redirect("/listings");
+})
+
+//logout
+
+router.get("/logout" , (req , res) => {
+    req.logout((err) => {
+        if(err) next();
+        res.redirect("/listings");
+    })
 })
 
 module.exports = router;

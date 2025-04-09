@@ -4,6 +4,7 @@ const wrapAsync = require("../utils/wrapAsync.js");
 const ExpressError = require("../utils/ExpressError.js");
 const {listingSchema} = require("../schema.js");
 const listing = require("../models/listing");
+const {isLoggedIn} = require("../middleware.js")
 
 
 const validateListing = (req , res, next) => {
@@ -24,12 +25,16 @@ router.get("/" , wrapAsync(async (req , res) => {
 }))
 
 //create
-router.get("/new" , (req , res) => {
+router.get("/new" ,isLoggedIn , (req , res) => {
+    // if(!req.isAuthenticated()){
+    //     res.redirect("/login");
+
+    // }
     res.render("new.ejs");
 })
 
 //create
-router.post("/" , wrapAsync( async (req , res) => {
+router.post("/" , isLoggedIn , wrapAsync( async (req , res) => {
     // if(!req.body.listing){
     //     throw new ExpressError(400 , "bad req , send valid data");
     // }
@@ -38,6 +43,7 @@ router.post("/" , wrapAsync( async (req , res) => {
         throw new ExpressError(400 , result.error);
     }
     const newListing = new listing(req.body.listing);
+    newListing.owner = req.user._id;
     await newListing.save();
     res.flash("success" , "New Listing Created")
     res.redirect("/listings");
@@ -46,18 +52,19 @@ router.post("/" , wrapAsync( async (req , res) => {
 //show
 router.get("/:id" , wrapAsync(async (req , res) => {
     const id = req.params.id;
-    const item = await listing.findById(id).populate("reviews");
+    const item = await listing.findById(id).populate("reviews").populate("owner");
+    console.log(item);
     res.render("show.ejs" , {item});
 }))
 
-router.get("/:id/edit" , wrapAsync(async (req , res) => {
+router.get("/:id/edit" , isLoggedIn , wrapAsync(async (req , res) => {
     let {id} = req.params;
     const item = await listing.findById(id);
     res.render("edit.ejs" , {item});
 }))
 
 // update
-router.put("/:id" , wrapAsync(async (req, res) => {
+router.put("/:id" , isLoggedIn ,wrapAsync(async (req, res) => {
     if(!req.body.listing){
         throw new ExpressError(400 , "bad req , send valid data");
     }
@@ -67,7 +74,7 @@ router.put("/:id" , wrapAsync(async (req, res) => {
 }))
 
 //delete
-router.delete("/:id" , wrapAsync(async (req , res) => {
+router.delete("/:id" , isLoggedIn , wrapAsync(async (req , res) => {
     let{id} = req.params;
     let deletedItem = await listing.findByIdAndDelete(id);
     console.log(`Deleted ${deletedItem.title}`)
