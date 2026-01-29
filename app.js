@@ -26,7 +26,8 @@ const sessionOptions = {
     cookie : {
         expires : true,
         maxAge: Date.now() + 7 * 24 * 60 * 60 * 1000 ,
-        httpOnly : true
+        httpOnly : true,
+        secure: process.env.NODE_ENV === "production",
     }
 }
 
@@ -45,6 +46,7 @@ app.use((req , res , next) => {
     next();
 })
 
+app.set("trust proxy", 1);
 app.set("view engine" , "ejs");
 app.set("views" , path.join(__dirname , "views"));
 app.use(express.static(path.join(__dirname , "public")));
