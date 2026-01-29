@@ -50,7 +50,7 @@
         
             <div class = "card col-5 mb-3 ms-3">
                 <div class="card-body">
-                        <h5><div class="card-title"> Nishant Chaudhary </div></h5>
+                        <h5><div class="card-title"> <%= review.author.username %> </div></h5>
                         <div class="card-text"> <b><%= review.rating %> Stars</b></div>
                         <div class="card-text"> <%= review.comment %></div>
             
@@ -67,6 +67,8 @@
     <%}%>
 </div>
 </div>
+
+<% if(currUser) { %>
 
 <div class="col-6 offset-3">
     <h4>Leave Review</h4>
@@ -86,6 +88,7 @@
 
 </div>
       
+<%}%>
 <!-- 
 <h1>Details :</h1>
 <ul>

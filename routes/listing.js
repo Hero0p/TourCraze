@@ -52,7 +52,7 @@ router.post("/" , isLoggedIn , wrapAsync( async (req , res) => {
 //show
 router.get("/:id" , wrapAsync(async (req , res) => {
     const id = req.params.id;
-    const item = await listing.findById(id).populate("reviews").populate("owner");
+    const item = await listing.findById(id).populate({path :"reviews" , populate : {path : "author"},}).populate("owner");
     console.log(item);
     res.render("show.ejs" , {item});
 }))
@@ -69,6 +69,10 @@ router.put("/:id" , isLoggedIn ,wrapAsync(async (req, res) => {
         throw new ExpressError(400 , "bad req , send valid data");
     }
     let{id} = req.params;
+    let item = await listing.findById(id);
+    if(!currUser && !item.owner.equals(currUser._id)){
+        res.redirect(`/listings/${id}`);
+    }
     await listing.findByIdAndUpdate(id , {...req.body.listing});
     res.redirect("/listings");
 }))
