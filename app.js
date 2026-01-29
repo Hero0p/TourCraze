@@ -14,11 +14,13 @@ const User = require("./models/user.js");
 const listings = require("./routes/listing.js");
 const reviews = require("./routes/review.js");
 const userRouter = require("./routes/user.js");
+require("dotenv").config();
 
-const port = 3000;
+
+const port = process.env.PORT || 3000;
 
 const sessionOptions = {
-    secret : "somethingsecret" ,
+    secret : process.env.SESSION_SECRET ,
     resave : false ,
     saveUninitialized : true ,
     cookie : {
@@ -52,7 +54,7 @@ app.engine("ejs" , ejsMate);
 // app.set(express.static(path.join(__dirname) , "public"));
 
 async function main(){
-        await mongoose.connect('mongodb://localhost:27017/wanderlust');
+        await mongoose.connect(process.env.MONGODB_URL);
 }
 
 main().then(() => {
