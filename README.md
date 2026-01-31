@@ -1,3 +1,6 @@
+**This project is deployed on render,**
+**preview : https://tourcraze.onrender.com/listings**
+
 TourCraze 🏡🚀
 
 TourCraze is a feature-rich Airbnb clone built using Express.js, Node.js, EJS, and MongoDB. It allows users to discover, book and manage vacation rentals seamlessly. Designed for a smooth and intuitive experience, TourCraze brings the essence of a travel marketplace to life.
