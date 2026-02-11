@@ -53,4 +53,4 @@ Server runs at http://localhost:3000 🚀
 
 🤝 Contributing
 
-Contributions are welcome! Fork the repo, create a pull request, and let's build together. 🚀
+Contributions are welcome! Fork the repo, create a pull request, and let's build together >_<  !!
